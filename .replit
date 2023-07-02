@@ -1,0 +1,5 @@
+language = "elixir"
+onBoot = "mix deps.get"
+compile = "mix compile"
+run = "mix phx.server"
+
