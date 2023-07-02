@@ -3,3 +3,7 @@ onBoot = "mix deps.get"
 compile = "mix compile"
 run = "mix phx.server"
 
+[deployment]
+run = ["sh", "-c", "mix phx.server"]
+build = ["sh", "-c", "mix compile"]
+
