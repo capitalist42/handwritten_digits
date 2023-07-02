@@ -1,6 +1,7 @@
 { pkgs }: {
   deps = [
     pkgs.busybox
-    pkgs.elixir_1_15
+    pkgs.inotify-tools
+    pkgs.elixir_1_14
   ];
 }
