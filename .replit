@@ -1,9 +1,11 @@
 language = "elixir"
 onBoot = "mix deps.get"
-compile = "mix compile"
+compile = "mix local.hex --force; mix local.rebar --force ; mix compile"
 run = "mix phx.server"
+
+[nix]
+channel = "stable-23_05"
 
 [deployment]
 run = ["sh", "-c", "mix phx.server"]
-build = ["sh", "-c", "mix compile"]
-
+build = ["sh", "-c", "mix local.hex --force; mix deps.get; mix compile"]
