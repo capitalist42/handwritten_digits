@@ -36,6 +36,7 @@ defmodule HandwrittenDigits.MixProject do
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.18.16"},
+      {:phoenix_pubsub, "~> 2.1.3"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.7.2"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
@@ -50,7 +51,8 @@ defmodule HandwrittenDigits.MixProject do
       {:scidata, "0.1.10"},
       {:exla, "0.5.3"},
       {:nx, "0.5.3"},
-      {:axon, "0.5.1"}
+      {:axon, "0.5.1"},
+      {:table_rex, "~> 3.1.1"}
     ]
   end
 
@@ -65,7 +67,8 @@ defmodule HandwrittenDigits.MixProject do
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      "train": ["train_handwritten_digits_model"]
     ]
   end
 end
