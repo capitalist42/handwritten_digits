@@ -59,4 +59,5 @@ defmodule HandwrittenDigits.ModelTest do
       Model.load!(path: @model_params_path)
     end
   end
+
 end

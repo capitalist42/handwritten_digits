@@ -5,11 +5,12 @@ defmodule HandwrittenDigits.Model do
 
   @spec build_model(tuple()) :: Axon.t()
   def build_model(input_shape) do
-    Axon.input("image", shape: input_shape)
+    Axon.input("pixel_values", shape: input_shape)
     |> Axon.flatten()
     |> Axon.dense(784, activation: :relu)
     |> Axon.dense(10, activation: :softmax)
   end
+
 
   def train(model, training_data, validation_data, opts \\ []) do
     epochs = Keyword.get(opts, :epochs, 10)
@@ -25,7 +26,7 @@ defmodule HandwrittenDigits.Model do
     case load_model_state_from_checkpoint(checkpoints_dir) do
       {:ok, nil} ->
         loop
-        |> Axon.Loop.checkpoint(path: checkpoints_dir, criteria: "Accuracy", mode: :max)
+        |> Axon.Loop.checkpoint(path: checkpoints_dir, criteria: "Accuracy", mode: :min)
         |> Axon.Loop.run(training_data, %{}, epochs: epochs, compiler: EXLA)
 
       {:ok, state} ->
@@ -35,12 +36,12 @@ defmodule HandwrittenDigits.Model do
     end
   end
 
-  # def test(model, trained_model_state, testing_data) do
-  #   model
-  #   |> Axon.Loop.evaluator(model)
-  #   |> Axon.Loop.metric(:mean_absolute_error)
-  #   |> Axon.Loop.run(testing_data, trained_model_state, iterations: 1000, compiler: EXLA)
-  # end
+  def test(model, trained_model_state, testing_data) do
+    model
+    |> Axon.Loop.evaluator()
+    |> Axon.Loop.metric(:mean_absolute_error)
+    |> Axon.Loop.run(testing_data, trained_model_state, iterations: 1000, compiler: EXLA)
+  end
 
   def save!(model, params, opts \\ []) do
     model_params_path = Keyword.get(opts, :path, get_model_params_path())
