@@ -26,14 +26,16 @@ defmodule Mix.Tasks.TrainHandwrittenDigitsModel do
     input_shape = {1, 28, 28}
     model = Model.build_model(input_shape)
 
-    Mix.Shell.IO.info("\nStart training...")
+    Mix.Shell.IO.info("\nStart training...\n")
     trained_model_state = Model.train(model, training_data, validation_data, [epochs: 10])
 
-    Mix.Shell.IO.info("\nTest model...")
+    Mix.Shell.IO.info("\nTest model...\n")
     Model.test(model, trained_model_state, testing_data)
 
-    Mix.Shell.IO.info("\nSave model...")
+    Mix.Shell.IO.info("\nSave model...\n")
     Model.save!(model, trained_model_state)
+
+    Mix.Shell.IO.info("\nTraining finished!\n")
   end
 
 end

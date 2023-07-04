@@ -40,7 +40,8 @@ defmodule HandwrittenDigits.Model do
     model
     |> Axon.Loop.evaluator()
     |> Axon.Loop.metric(:mean_absolute_error)
-    |> Axon.Loop.run(testing_data, trained_model_state, iterations: 1000, compiler: EXLA)
+    |> Axon.Loop.metric(:accuracy)
+    |> Axon.Loop.run(testing_data, trained_model_state, epoch: 5, iterations: 1000, compiler: EXLA)
   end
 
   def save!(model, params, opts \\ []) do

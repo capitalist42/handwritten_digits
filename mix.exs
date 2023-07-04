@@ -52,7 +52,8 @@ defmodule HandwrittenDigits.MixProject do
       {:exla, "0.5.3"},
       {:nx, "0.5.3"},
       {:axon, "0.5.1"},
-      {:table_rex, "~> 3.1.1"}
+      {:table_rex, "~> 3.1.1"},
+      {:evision, "~> 0.1.31"}
     ]
   end
 
@@ -68,7 +69,8 @@ defmodule HandwrittenDigits.MixProject do
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
-      "train": ["train_handwritten_digits_model"]
+      "train_model": ["train_handwritten_digits_model"],
+      "test_model": ["test_handwritten_digits_model"]
     ]
   end
 end

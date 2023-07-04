@@ -18,7 +18,7 @@ defmodule HandwrittenDigits.Application do
       HandwrittenDigitsWeb.Endpoint,
       # Start a worker by calling: HandwrittenDigits.Worker.start_link(arg)
       # {HandwrittenDigits.Worker, arg}
-      {Nx.Serving, serving: build_serving(), name: HandwrittenDigits.Serving, batch_timeout: 100}
+      {Nx.Serving, serving: build_serving(), name: HandwrittenDigits.Serving, batch_size: 4, batch_timeout: 100}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -43,6 +43,7 @@ defmodule HandwrittenDigits.Application do
 
     Nx.Serving.new(
       fn ->
+        IO.inspect("serving...")
         {saved_model, saved_params} = HandwrittenDigits.Model.load!()
 
         # Build the prediction defn function
@@ -56,11 +57,13 @@ defmodule HandwrittenDigits.Application do
 
         # The returned function is called for every accumulated batch
         fn inputs ->
+          IO.inspect(inputs, label: "inputs 1")
           inputs = Nx.Batch.pad(inputs, batch_size - inputs.size)
+          IO.inspect(inputs, label: "inputs 2")
+
           predict_fun.(saved_params, inputs)
         end
-      end,
-      batch_size: batch_size
+      end
     )
   end
 end

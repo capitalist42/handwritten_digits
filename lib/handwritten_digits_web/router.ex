@@ -17,7 +17,8 @@ defmodule HandwrittenDigitsWeb.Router do
   scope "/", HandwrittenDigitsWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/", PageLive, :index
   end
 
   # Other scopes may use custom stacks.
